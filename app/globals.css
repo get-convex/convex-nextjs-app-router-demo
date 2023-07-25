@@ -2,26 +2,102 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+main {
+  @apply mx-auto w-[600px];
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+ul {
+  @apply border-l border-r border-t;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+li {
+  @apply p-4 border-b flex gap-2;
+}
+
+li > div {
+  @apply flex flex-col;
+}
+
+li > div > div {
+  @apply flex gap-1;
+}
+
+li .name {
+  @apply font-bold;
+}
+
+li .username {
+  @apply text-slate-500;
+}
+
+li .time {
+  @apply text-slate-600;
+}
+
+form,
+.form {
+  @apply border-r border-l;
+}
+
+form > div:first-child,
+.form > div:first-child {
+  @apply flex p-4 gap-2;
+}
+
+input[type="text"] {
+  @apply w-full py-2 px-4;
+}
+
+button,
+form button[type="submit"] {
+  @apply rounded bg-slate-200 py-2 px-4;
+}
+
+button[disabled],
+form button[type="submit"][disabled] {
+  @apply text-slate-400;
+}
+
+form .characterLimit {
+  @apply h-1 bg-gray-300;
+}
+
+form .characterLimit.characterLimitOver {
+  @apply bg-red-400;
+}
+
+form .error {
+  @apply text-red-400 py-2 px-4;
+}
+
+ul li img {
+  @apply w-10 h-10 rounded-full;
+}
+
+.cl-avatarBox {
+  @apply w-[2.5rem] h-[2.5rem];
+}
+
+.authorButton {
+  @apply min-w-[2.5rem] min-h-[2.5rem];
+}
+
+.profile {
+  @apply border-r border-l p-4 bg-gradient-to-b from-slate-300 to-white;
+}
+
+.profile > div {
+  @apply flex gap-1;
+}
+
+.profile h1 {
+  @apply font-bold text-2xl;
+}
+
+.profile h2 {
+  @apply text-slate-500;
+}
+
+.profile img {
+  @apply w-20 h-20 rounded-full border-2 border-white;
 }
