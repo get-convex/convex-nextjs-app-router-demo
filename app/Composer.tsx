@@ -26,12 +26,12 @@ export function Composer() {
   const charCount = formik.values.text.length;
   const isOverLimit = charCount > CHARACTER_LIMIT;
   return (
-    <>
-      <form onSubmit={formik.handleSubmit}>
-        <div>
-          <div className="authorButton">
-            <UserButton afterSignOutUrl="/" />
-          </div>
+    <div className="composer">
+      <div>
+        <div className="authorButton">
+          <UserButton afterSignOutUrl="/" />
+        </div>
+        <form onSubmit={formik.handleSubmit}>
           <input
             placeholder="What's up?"
             type="text"
@@ -46,19 +46,17 @@ export function Composer() {
           >
             Post
           </button>
-        </div>
-        {formik.errors.text !== undefined ? (
-          <div className="error">{formik.errors.text}</div>
-        ) : null}
-        <div
-          className={`characterLimit ${
-            isOverLimit ? "characterLimitOver" : ""
-          }`}
-          style={{
-            width: `${Math.min(100, (100 * charCount) / CHARACTER_LIMIT)}%`,
-          }}
-        />
-      </form>
-    </>
+        </form>
+      </div>
+      {formik.errors.text !== undefined ? (
+        <div className="error">{formik.errors.text}</div>
+      ) : null}
+      <div
+        className={`characterLimit ${isOverLimit ? "characterLimitOver" : ""}`}
+        style={{
+          width: `${Math.min(100, (100 * charCount) / CHARACTER_LIMIT)}%`,
+        }}
+      />
+    </div>
   );
 }

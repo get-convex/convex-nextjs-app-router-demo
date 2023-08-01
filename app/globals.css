@@ -34,14 +34,16 @@ li .time {
   @apply text-slate-600;
 }
 
-form,
-.form {
+.composer {
   @apply border-r border-l;
 }
 
-form > div:first-child,
-.form > div:first-child {
+.composer > div:first-child {
   @apply flex p-4 gap-2;
+}
+
+.composer form {
+  @apply flex gap-2 flex-grow;
 }
 
 input[type="text"] {
@@ -49,24 +51,24 @@ input[type="text"] {
 }
 
 button,
-form button[type="submit"] {
+.composer button[type="submit"] {
   @apply rounded bg-slate-200 py-2 px-4;
 }
 
 button[disabled],
-form button[type="submit"][disabled] {
+.composer button[type="submit"][disabled] {
   @apply text-slate-400;
 }
 
-form .characterLimit {
+.composer .characterLimit {
   @apply h-1 bg-gray-300;
 }
 
-form .characterLimit.characterLimitOver {
+.composer .characterLimit.characterLimitOver {
   @apply bg-red-400;
 }
 
-form .error {
+.composer .error {
   @apply text-red-400 py-2 px-4;
 }
 

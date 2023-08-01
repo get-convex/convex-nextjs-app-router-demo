@@ -9,7 +9,7 @@ export function SignInOrComposer() {
   return isAuthenticated ? (
     <Composer />
   ) : (
-    <div className="form">
+    <div className="composer">
       <div>{isLoading ? <button disabled>...</button> : <SignInButton />}</div>
       <div className="h-1"></div>
     </div>
