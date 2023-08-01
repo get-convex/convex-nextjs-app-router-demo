@@ -1,8 +1,8 @@
 # Convex Next.js App Router Demo
 
-See it live here:
-
 This example app showcases Convex backend powering a Next.js app.
+
+![Screenshot of the app](./screenshot.png)
 
 The app is a realtime social network with a limit of 20 characters per post (who needs more?). There are three pages:
 
@@ -10,6 +10,8 @@ The app is a realtime social network with a limit of 20 characters per post (who
 - The single post page is using server components and SSR to render a post.
 
 The demo includes server-side validation and rate limiting.
+
+See it live here: https://convex-nextjs-app-router-demo.vercel.app/
 
 ## Setting up
 
