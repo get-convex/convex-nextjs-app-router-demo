@@ -1,4 +1,4 @@
-import * as async from "modern-async";
+import { asyncMap } from "modern-async";
 import { paginationOptsValidator } from "convex/server";
 import { v } from "convex/values";
 import { QueryCtx, mutation, query } from "./_generated/server";
@@ -52,7 +52,7 @@ export const get = query({
 });
 
 async function enrichPosts(ctx: QueryCtx, posts: Doc<"posts">[]) {
-  return await async.map(posts, (post) => enrichPost(ctx, post));
+  return await asyncMap(posts, (post) => enrichPost(ctx, post));
 }
 
 async function enrichPost(ctx: QueryCtx, post: Doc<"posts">) {
