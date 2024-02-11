@@ -16,7 +16,7 @@ export function Composer() {
     },
     onSubmit: async (values) => {
       try {
-        await createPost({ ...values, authorId: userId! });
+        await createPost({ ...values });
         formik.resetForm();
       } catch (e) {
         formik.setErrors({ text: "Couldn't send this post, try later" });

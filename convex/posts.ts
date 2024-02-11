@@ -30,7 +30,7 @@ export const forAuthor = query({
     }
     const result = await ctx.db
       .query("posts")
-      .withIndex("byAuthorId", (q) => q.eq("authorId", author._id))
+      .withIndex("authorId", (q) => q.eq("authorId", author._id))
       .order("desc")
       .paginate(args.paginationOpts);
 
@@ -64,8 +64,23 @@ async function enrichPost(ctx: QueryCtx, post: Doc<"posts">) {
 }
 
 export const create = mutation({
-  args: { authorId: v.id("users"), text: v.string() },
-  handler: async (ctx, { text, authorId }) => {
+  args: { text: v.string() },
+  handler: async (ctx, { text }) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (identity === null) {
+      throw new Error("Called createPost without being authenticated");
+    }
+    const author = await ctx.db
+      .query("users")
+      .withIndex("tokenIdentifier", (q) =>
+        q.eq("tokenIdentifier", identity.tokenIdentifier)
+      )
+      .unique();
+
+    if (author === null) {
+      throw new Error("User not found");
+    }
+
     if (text.length <= 0 || text.length > CHARACTER_LIMIT) {
       throw new Error("Message is too damn long! (or empty)");
     }
@@ -73,9 +88,9 @@ export const create = mutation({
     const numSentRecently = (
       await ctx.db
         .query("posts")
-        .withIndex("byAuthorId", (q) =>
+        .withIndex("authorId", (q) =>
           q
-            .eq("authorId", authorId)
+            .eq("authorId", author._id)
             .gte("_creationTime", Date.now() - 1000 * 60)
         )
         .take(3)
@@ -85,11 +100,10 @@ export const create = mutation({
       throw new Error("Too fast, slow down!");
     }
 
-    await ctx.db.insert("posts", { authorId, text });
+    await ctx.db.insert("posts", { authorId: author._id, text });
     // Instead of computing the number of tweets when a profile
     // is loaded, we "denormalize" the data and increment
     // a counter - this is safe thanks to Convex's ACID properties!
-    const author = (await ctx.db.get(authorId))!;
-    await ctx.db.patch(authorId, { numPosts: author.numPosts + 1 });
+    await ctx.db.patch(author._id, { numPosts: author.numPosts + 1 });
   },
 });

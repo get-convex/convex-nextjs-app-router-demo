@@ -13,9 +13,11 @@ export const store = mutation({
       if (
         user.name !== identity.name ||
         user.username !== identity.nickname ||
-        user.pictureUrl !== identity.pictureUrl
+        user.pictureUrl !== identity.pictureUrl ||
+        user.tokenIdentifier !== identity.tokenIdentifier
       ) {
         await ctx.db.patch(user._id, {
+          tokenIdentifier: identity.tokenIdentifier,
           name: identity.name,
           username: identity.nickname,
           pictureUrl: identity.pictureUrl,
@@ -25,6 +27,7 @@ export const store = mutation({
     }
     // If it's a new identity, create a new `User`.
     return await ctx.db.insert("users", {
+      tokenIdentifier: identity.tokenIdentifier,
       name: identity.name!,
       username: identity.nickname!,
       pictureUrl: identity.pictureUrl!,
@@ -45,6 +48,6 @@ export const get = query({
 export async function getUser(ctx: QueryCtx, username: string) {
   return await ctx.db
     .query("users")
-    .withIndex("byUserName", (q) => q.eq("username", username))
+    .withIndex("username", (q) => q.eq("username", username))
     .unique();
 }

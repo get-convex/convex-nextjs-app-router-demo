@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "npm-run-all dev:init --parallel dev:server dev:client",
+    "dev": "npm-run-all dev:init --parallel dev:backend dev:frontend",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
